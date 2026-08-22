@@ -1,1 +1,1 @@
-{"name": "ai-resume-maker", "version": "1.0.0", "main": "index.js", "scripts": {"start": "node index.js"}, "dependencies": {"express": "^4.19.2", "pdfkit": "^0.15.0", "@anthropic-ai/sdk": "^0.27.0", "dotenv": "^16.4.5"}}
+{"name": "ai-resume-maker", "version": "1.0.0", "main": "index.js", "scripts": {"start": "node index.js"}, "dependencies": {"express": "^4.19.2", "pdfkit": "^0.15.0", @google/genai": "^0.3.0, "dotenv": "^16.4.5"}}
