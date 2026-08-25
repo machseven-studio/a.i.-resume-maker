@@ -201,7 +201,7 @@ const HTML_PAGE = `<!DOCTYPE html>
         </div>
         <div class="flex gap-3">
           <span class="text-gold font-medium text-sm" style="font-family: Georgia, serif;">3.</span>
-          <p class="text-parchment text-sm leading-relaxed" style="font-family: Georgia, serif;">Your resume will be customised with <span class="text-gold font-semibold">executive-grade</span> raised lettering, <span class="text-gold font-semibold">premium golden edges</span> for the highlights, and a <span class="text-gold font-semibold">neat layout</span> cleaner than your excuses for being unemployed.</p>
+          <p class="text-parchment text-sm leading-relaxed" style="font-family: Georgia, serif;">Your resume will be customised with <span class="text-gold font-semibold">executive-grade</span> raised lettering, <span class="text-gold font-semibold">premium golden edges</span> for the highlights, and a <span class="text-gold font-semibold">neat layout</span> <em>(which is cleaner than your excuses for being unemployed.)</em></p>
         </div>
         <div class="flex gap-3">
           <span class="text-gold font-medium text-sm" style="font-family: Georgia, serif;">4.</span>
@@ -210,8 +210,9 @@ const HTML_PAGE = `<!DOCTYPE html>
       </div>
 
       <h2 class="font-display text-2xl md:text-4xl font-semibold text-parchment leading-snug max-w-2xl mx-auto">
-        Give us <em>3 minutes</em> of your time, and we will give you a <em class="text-gold font-semibold">polished</em> resume which is <strong>BOUND</strong> to impress the job recruiters.
+        Give us 120 seconds. We'll craft a resume the recruiters can't ignore.
       </h2>
+      <p class="italic text-parchment/70 text-base mt-3"><em>(as for the processing fee? well, it's cheaper than a soda can.)</em></p>
     </div>
 
     <!-- FORM CARD -->
@@ -283,8 +284,6 @@ const HTML_PAGE = `<!DOCTYPE html>
         <div class="text-center font-display text-parchment leading-relaxed pt-2">
           <p class="text-lg mb-1">You're not paying for a &quot;PDF&quot;. You're paying to <em>stop getting filtered out</em>.</p>
           <p class="text-lg mb-1">Most people skip this step, and wonder why they're still <strong>UNEMPLOYED</strong>.</p>
-          <p class="text-lg">Fortunately, you and I, we both know that you're smart enough to not commit that mistake :P.</p>
-          <p class="italic text-gold text-base mt-4">It's a win-win scenario, my friend. Go ace that job interview like a person who has already been qualified 😎</p>
         </div>
 
         <!-- PRICING TAGLINE -->
@@ -313,7 +312,7 @@ const HTML_PAGE = `<!DOCTYPE html>
             <span id="btnLabel">Unlock for ₹49</span>
           </button>
           <p class="text-center italic text-gold text-sm mt-3">
-            Don't think. It's literally half a dollar. Who would've thought 50 cents could get you hired?
+            Who would've thought ₹49 could get you hired?
           </p>
           <p class="text-center text-xs text-parchment/50 mt-3">Secure checkout · Powered by Razorpay</p>
         </div>
