@@ -628,7 +628,7 @@ function verifyRazorpaySignature(body) {
 // PDF RENDERING — Elegant Gold theme (cream/parchment + gold + charcoal),
 // classic centered "Harvard-style" layout
 // ----------------------------------------------------------------------------
-const MARGIN = 36;
+const MARGIN = 28;
 const PAGE_WIDTH = 612;
 const PAGE_HEIGHT = 792;
 const CONTENT_WIDTH = PAGE_WIDTH - MARGIN * 2;
@@ -664,7 +664,7 @@ function drawSectionHeader(doc, theme, title) {
   ensureSpace(doc, theme, 26);
   doc
     .font(theme.headerFont)
-    .fontSize(11)
+    .fontSize(12)
     .fillColor(theme.accent)
     .text(title.toUpperCase(), MARGIN, doc.y, {
       width: CONTENT_WIDTH,
@@ -679,7 +679,7 @@ function drawBullet(doc, theme, text) {
   const indent = 12;
   const textWidth = CONTENT_WIDTH - indent;
 
-  doc.font(theme.bodyFont).fontSize(10);
+  doc.font(theme.bodyFont).fontSize(10.5);
   const estimatedHeight = doc.heightOfString(text, { width: textWidth }) + 4;
   ensureSpace(doc, theme, estimatedHeight);
 
@@ -708,7 +708,7 @@ function generatePdfBuffer(resume) {
     // ---------- HEADER (centered, Harvard-style) ----------
     doc
       .font(theme.headerFont)
-      .fontSize(22)
+      .fontSize(24)
       .fillColor(theme.heading)
       .text(resume.name || 'Candidate Name', MARGIN, MARGIN, {
         width: CONTENT_WIDTH,
@@ -717,7 +717,7 @@ function generatePdfBuffer(resume) {
 
     doc
       .font(theme.bodyFont)
-      .fontSize(11.5)
+      .fontSize(12.5)
       .fillColor(theme.subtext)
       .text(resume.targetRole || '', {
         width: CONTENT_WIDTH,
@@ -735,7 +735,7 @@ function generatePdfBuffer(resume) {
 
     doc
       .font(theme.bodyFont)
-      .fontSize(9)
+      .fontSize(10)
       .fillColor(theme.subtext)
       .text(contactParts.join('   |   '), {
         width: CONTENT_WIDTH,
@@ -750,7 +750,7 @@ function generatePdfBuffer(resume) {
       drawSectionHeader(doc, theme, 'Summary');
       doc
         .font(theme.bodyFont)
-        .fontSize(10.5)
+        .fontSize(11)
         .fillColor(theme.body)
         .text(resume.summary, { width: CONTENT_WIDTH, lineGap: 2 });
       doc.moveDown(0.8);
@@ -765,7 +765,7 @@ function generatePdfBuffer(resume) {
 
         doc
           .font(theme.headerFont)
-          .fontSize(11.5)
+          .fontSize(12.5)
           .fillColor(theme.heading)
           .text(job.title || 'Role', MARGIN, doc.y, { continued: false, width: CONTENT_WIDTH });
 
@@ -773,7 +773,7 @@ function generatePdfBuffer(resume) {
         if (orgLine) {
           doc
             .font(theme.bodyFont)
-            .fontSize(9.5)
+            .fontSize(10.5)
             .fillColor(theme.subtext)
             .text(orgLine, { width: CONTENT_WIDTH });
         }
@@ -797,7 +797,7 @@ function generatePdfBuffer(resume) {
       drawSectionHeader(doc, theme, 'Skills');
       doc
         .font(theme.bodyFont)
-        .fontSize(10)
+        .fontSize(10.5)
         .fillColor(theme.body)
         .text(resume.skills.join('   •   '), { width: CONTENT_WIDTH, lineGap: 3 });
       doc.moveDown(0.8);
@@ -810,7 +810,7 @@ function generatePdfBuffer(resume) {
         ensureSpace(doc, theme, 26);
         doc
           .font(theme.headerFont)
-          .fontSize(10.5)
+          .fontSize(11.5)
           .fillColor(theme.heading)
           .text(edu.degree || '', MARGIN, doc.y, { width: CONTENT_WIDTH });
 
@@ -818,7 +818,7 @@ function generatePdfBuffer(resume) {
         if (eduLine) {
           doc
             .font(theme.bodyFont)
-            .fontSize(9.5)
+            .fontSize(10.5)
             .fillColor(theme.subtext)
             .text(eduLine, { width: CONTENT_WIDTH });
         }
