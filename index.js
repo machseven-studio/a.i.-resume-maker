@@ -84,6 +84,19 @@ function getBrowser() {
       args: chromium.args,
       executablePath: chromium.executablePath(),
       headless: chromium.headless,
+    }).then((browser) => {
+      // If Chrome crashes mid-flight, drop the cached instance so the
+      // next request launches a fresh one instead of retrying a dead browser.
+      browser.on('disconnected', () => {
+        browserPromise = null;
+      });
+      return browser;
+    }).catch((err) => {
+      // Don't leave a rejected promise cached forever — without this, one
+      // failed launch permanently breaks PDF generation until a manual
+      // server restart, since browserPromise would never be null again.
+      browserPromise = null;
+      throw err;
     });
   }
   return browserPromise;
@@ -797,11 +810,11 @@ function safeJSONParse(text) {
   return JSON.parse(jsonSlice);
 }
 
-// FIX: "gemini-3.6-flash" is not a real Gemini model — it doesn't exist,
-// so every single call to the AI was failing at the API level, which is
-// exactly why every "generate" click ended in "failed to generate resume".
-// Swapped in "gemini-2.0-flash", a real, current, free-tier-eligible model.
-const GEMINI_MODEL = 'gemini-2.0-flash';
+// "gemini-3.6-flash" IS the correct current model — Google's own API error
+// message names it as the required replacement for retired Flash models.
+// "gemini-2.0-flash" (previously here) has itself since been retired by
+// Google, which is why this would 404 exactly like the old 2.5-flash did.
+const GEMINI_MODEL = 'gemini-3.6-flash';
 
 async function generateResumeContent(formData) {
   const response = await genAI.models.generateContent({
@@ -1056,21 +1069,32 @@ function buildResumeHtml(resume) {
 </html>`;
 }
 
-async function generatePdfBuffer(resume) {
-  const html = buildResumeHtml(resume);
+async function renderPdfWithBrowser(html) {
   const browser = await getBrowser();
   const page = await browser.newPage();
   try {
     await page.setContent(html, { waitUntil: 'networkidle0' });
-    const pdfBuffer = await page.pdf({
+    return await page.pdf({
       width: '210mm',
       height: '297mm',
       printBackground: true,
       margin: { top: 0, bottom: 0, left: 0, right: 0 },
     });
-    return pdfBuffer;
   } finally {
-    await page.close();
+    await page.close().catch(() => {});
+  }
+}
+
+async function generatePdfBuffer(resume) {
+  const html = buildResumeHtml(resume);
+  try {
+    return await renderPdfWithBrowser(html);
+  } catch (err) {
+    // First attempt after a cold start / crashed Chrome can fail — retry
+    // once with a freshly launched browser before giving up.
+    console.error('PDF render failed, retrying with a fresh browser:', err.message);
+    browserPromise = null;
+    return await renderPdfWithBrowser(html);
   }
 }
 
